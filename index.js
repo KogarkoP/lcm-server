@@ -8,7 +8,7 @@ app.get("/kogarkopavel_gmail_com", (req, res) => {
   const x = +req.query.x;
   const y = +req.query.y;
 
-  if (!Number.isInteger(x) || x <= 0 || !Number.isInteger(y) || y <= 0) {
+  if (!Number.isInteger(x) || x < 0 || !Number.isInteger(y) || y < 0) {
     return res.send("NaN");
   }
 
@@ -19,7 +19,7 @@ app.get("/kogarkopavel_gmail_com", (req, res) => {
     return gcd(y, x % y);
   };
 
-  const lcm = Math.abs(x * y) / gcd(x, y);
+  const lcm = x === 0 || y === 0 ? 0 : (x * y) / gcd(x, y);
 
   res.status(200).send(String(lcm));
 });
