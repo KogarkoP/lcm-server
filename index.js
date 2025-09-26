@@ -5,23 +5,28 @@ const app = express();
 app.use(cors());
 
 app.get("/kogarkopavel_gmail_com", (req, res) => {
-  const x = +req.query.x;
-  const y = +req.query.y;
+  const xStr = req.query.x;
+  const yStr = req.query.y;
 
-  if (!Number.isInteger(x) || x < 0 || !Number.isInteger(y) || y < 0) {
+  const isNaturalOrZero = (str) => /^\d+$/.test(str);
+
+  if (!isNaturalOrZero(xStr) || !isNaturalOrZero(yStr)) {
     return res.send("NaN");
   }
 
+  const x = BigInt(req.query.x);
+  const y = BigInt(req.query.y);
+
   const gcd = (x, y) => {
-    if (y === 0) {
+    if (y === 0n) {
       return x;
     }
     return gcd(y, x % y);
   };
 
-  const lcm = x === 0 || y === 0 ? 0 : (x * y) / gcd(x, y);
+  const lcm = x === 0n || y === 0n ? 0n : (x * y) / gcd(x, y);
 
-  res.status(200).send(String(lcm));
+  res.send(lcm.toString());
 });
 
 const PORT = process.env.PORT || 3000;
