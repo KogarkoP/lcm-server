@@ -21,7 +21,7 @@ app.get("/kogarkopavel_gmail_com", (req, res) => {
 
   const lcm = Math.abs(x * y) / gcd(x, y);
 
-  res.status(200).send(lcm);
+  res.status(200).send(String(lcm));
 });
 
 const PORT = process.env.PORT || 3000;
